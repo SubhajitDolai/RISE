@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail } from 'lucide-react';
+import { Mail, User, Phone } from 'lucide-react';
 
 interface ContactSectionProps {
   isVisible: { [key: string]: boolean };
@@ -18,14 +18,14 @@ const ContactSection: React.FC<ContactSectionProps> = ({ isSubmitting, submitSta
       <div className="text-center mb-20 fade-in-element">
         <div className="text-sm font-bold text-slate-400 tracking-wider mb-4">GET IN TOUCH</div>
         <h2 className="text-5xl font-bold mb-6">
-          Enter Your <span className="bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent">Email</span>
+          Get In <span className="bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent">Touch</span>
         </h2>
         <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-          We&apos;ll notify the owner and get back to you soon.
+          Share your details and we&apos;ll contact you within 24 hours to discuss your project requirements.
         </p>
       </div>
       <div className="max-w-xl mx-auto bg-slate-800 rounded-3xl shadow-2xl p-10 fade-in-element">
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {submitStatus.type && (
             <div className={`p-4 rounded-xl ${
               submitStatus.type === 'success' 
@@ -35,6 +35,25 @@ const ContactSection: React.FC<ContactSectionProps> = ({ isSubmitting, submitSta
               {submitStatus.message}
             </div>
           )}
+          
+          {/* Name Field */}
+          <div className="space-y-2">
+            <label htmlFor="name" className="block text-sm font-bold text-slate-300">Full Name *</label>
+            <div className="flex items-center space-x-3">
+              <User size={22} className="text-slate-400" />
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                disabled={isSubmitting}
+                className="flex-1 px-6 py-4 border-2 border-slate-600 bg-slate-700 rounded-xl focus:border-slate-500 focus:outline-none transition-all duration-300 text-white placeholder-slate-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                placeholder="Enter your full name"
+              />
+            </div>
+          </div>
+
+          {/* Email Field */}
           <div className="space-y-2">
             <label htmlFor="email" className="block text-sm font-bold text-slate-300">Email Address *</label>
             <div className="flex items-center space-x-3">
@@ -46,10 +65,28 @@ const ContactSection: React.FC<ContactSectionProps> = ({ isSubmitting, submitSta
                 required
                 disabled={isSubmitting}
                 className="flex-1 px-6 py-4 border-2 border-slate-600 bg-slate-700 rounded-xl focus:border-slate-500 focus:outline-none transition-all duration-300 text-white placeholder-slate-400 disabled:opacity-50 disabled:cursor-not-allowed"
-                placeholder="Enter your email"
+                placeholder="Enter your email address"
               />
             </div>
           </div>
+
+          {/* Phone Field */}
+          <div className="space-y-2">
+            <label htmlFor="phone" className="block text-sm font-bold text-slate-300">Phone Number *</label>
+            <div className="flex items-center space-x-3">
+              <Phone size={22} className="text-slate-400" />
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                disabled={isSubmitting}
+                className="flex-1 px-6 py-4 border-2 border-slate-600 bg-slate-700 rounded-xl focus:border-slate-500 focus:outline-none transition-all duration-300 text-white placeholder-slate-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                placeholder="Enter your phone number"
+              />
+            </div>
+          </div>
+
           <button
             type="submit"
             disabled={isSubmitting}
@@ -61,7 +98,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ isSubmitting, submitSta
                 <span>SUBMITTING...</span>
               </>
             ) : (
-              'NOTIFY OWNER'
+              'SEND MESSAGE'
             )}
           </button>
         </form>
