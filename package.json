@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@types/nodemailer": "^6.4.17",
+    "dotenv": "^17.2.1",
     "lucide-react": "^0.537.0",
     "next": "15.4.4",
     "nodemailer": "^7.0.5",
@@ -25,16 +26,16 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.4.4",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.4.4",
+    "prettier": "^3.0.0",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "@next/bundle-analyzer": "^15.4.4",
-    "prettier": "^3.0.0"
+    "typescript": "^5"
   },
   "engines": {
     "node": ">=18.0.0",

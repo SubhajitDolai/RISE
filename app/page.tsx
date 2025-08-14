@@ -296,7 +296,9 @@ export default function RiseEnterprisesPage() {
     try {
       const formData = new FormData(e.currentTarget);
       const formObject = {
+        name: formData.get('name') as string,
         email: formData.get('email') as string,
+        phone: formData.get('phone') as string,
       };
 
       const response = await fetch('/api/contact', {
