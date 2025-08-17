@@ -3,39 +3,45 @@
 import { useState, useEffect, useMemo, useCallback, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { usePerformance } from './hooks/usePerformance';
-import { 
-  Building2, Building, Sparkles, Home, Landmark, TreePine, Wrench, ShieldCheck, Lock, Users, Phone, Ruler, Star, Smile, ClipboardList, Target, AlarmClock, DollarSign, Eye, Gem, Rocket, Zap 
+import {
+  Building2, Building, Sparkles, Home, Landmark, TreePine, Wrench, ShieldCheck, Lock, Users, Phone, Ruler, Star, Smile, ClipboardList, Target, AlarmClock, DollarSign, Eye, Gem, Rocket, Zap
 } from 'lucide-react';
 
 // Lazy load components for better performance
-const HeroSection = dynamic(() => import('./components/HeroSection'), {
-  loading: () => <div className="h-screen bg-slate-900 animate-pulse" />
+const HeroSection = dynamic(() => import('./components/sections/HeroSection'), {
+  loading: () => <div className="h-screen bg-slate-900 animate-pulse" />,
+  ssr: false,
 });
 
-const AboutSection = dynamic(() => import('./components/AboutSection'), {
-  loading: () => <div className="py-32 bg-white animate-pulse" />
+const AboutSection = dynamic(() => import('./components/sections/AboutSection'), {
+  loading: () => <div className="py-32 bg-white animate-pulse" />,
+  ssr: false,
 });
 
-const ServicesSection = dynamic(() => import('./components/ServicesSection'), {
-  loading: () => <div className="py-32 bg-slate-50 animate-pulse" />
+const ServicesSection = dynamic(() => import('./components/sections/ServicesSection'), {
+  loading: () => <div className="py-32 bg-slate-50 animate-pulse" />,
+  ssr: false,
 });
 
-const ProjectsSection = dynamic(() => import('./components/ProjectsSection'), {
-  loading: () => <div className="py-32 bg-white animate-pulse" />
+const ProjectsSection = dynamic(() => import('./components/sections/ProjectsSection'), {
+  loading: () => <div className="py-32 bg-white animate-pulse" />,
+  ssr: false,
 });
 
-const ContactSection = dynamic(() => import('./components/ContactSection'), {
-  loading: () => <div className="py-32 bg-slate-900 animate-pulse" />
+const ContactSection = dynamic(() => import('./components/sections/ContactSection'), {
+  loading: () => <div className="py-32 bg-slate-900 animate-pulse" />,
+  ssr: false,
 });
 
-const Footer = dynamic(() => import('./components/Footer'), {
-  loading: () => <div className="py-16 bg-slate-900 animate-pulse" />
+const Footer = dynamic(() => import('./components/sections/Footer'), {
+  loading: () => <div className="py-16 bg-slate-900 animate-pulse" />,
+  ssr: false,
 });
 
 export default function RiseEnterprisesPage() {
   // Performance optimization hook
   usePerformance();
-  
+
   const [currentSlide, setCurrentSlide] = useState(0);
   const [headerBg, setHeaderBg] = useState(false);
   const [isVisible, setIsVisible] = useState<{ [key: string]: boolean }>({});
@@ -125,36 +131,42 @@ export default function RiseEnterprisesPage() {
 
   const projects = useMemo(() => [
     {
+      id: "1",
       name: "Podium Construction",
       category: "Infrastructure",
       image: "https://images.unsplash.com/photo-1590479773265-7464e5d48118?w=400&q=80&auto=format&fit=crop",
       description: "Advanced podium construction with modern architectural design"
     },
     {
+      id: "2",
       name: '"A" Building',
       category: "Commercial",
       image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&q=80&auto=format&fit=crop",
       description: "State-of-the-art commercial building with premium amenities"
     },
     {
+      id: "3",
       name: "Multipurpose Hall",
       category: "Community",
       image: "https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=400&q=80&auto=format&fit=crop",
       description: "Versatile community space designed for multiple functions"
     },
     {
+      id: "4",
       name: 'Sports Complex "A"',
       category: "Recreation",
       image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&q=80&auto=format&fit=crop",
       description: "Modern sports facility with advanced equipment and design"
     },
     {
+      id: "5",
       name: 'Sports Complex "B"',
       category: "Recreation",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop",
       description: "Secondary sports complex with comprehensive facilities"
     },
     {
+      id: "6",
       name: "Main Buildings & Parking",
       category: "Development",
       image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&q=80&auto=format&fit=crop",
@@ -243,7 +255,7 @@ export default function RiseEnterprisesPage() {
   // Optimized scroll effects with throttling
   useEffect(() => {
     let ticking = false;
-    
+
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
@@ -255,13 +267,13 @@ export default function RiseEnterprisesPage() {
           elements.forEach((element, index) => {
             const elementTop = element.getBoundingClientRect().top;
             const elementVisible = elementTop < windowHeight - 80;
-            
+
             setIsVisible(prev => ({
               ...prev,
               [`element-${index}`]: elementVisible
             }));
           });
-          
+
           ticking = false;
         });
         ticking = true;
@@ -357,31 +369,28 @@ export default function RiseEnterprisesPage() {
   return (
     <div className="font-sans overflow-x-hidden bg-white">
       {/* Navigation */}
-      <header 
-        className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-          headerBg 
-            ? 'bg-white/95 backdrop-blur-xl shadow-2xl border-b border-slate-200' 
-            : 'bg-transparent'
-        }`}
+      <header
+        className={`fixed w-full top-0 z-50 transition-all duration-300 ${headerBg
+          ? 'bg-white/95 backdrop-blur-xl shadow-2xl border-b border-slate-200'
+          : 'bg-transparent'
+          }`}
       >
         <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className={`text-3xl font-bold transition-all duration-300 ${
-            headerBg ? 'text-slate-900' : 'text-white'
-          }`}>
+          <div className={`text-3xl font-bold transition-all duration-300 ${headerBg ? 'text-slate-900' : 'text-white'
+            }`}>
             <span className="bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 bg-clip-text text-transparent">
               RISE
             </span>
             <div className="text-xs font-semibold tracking-widest mt-1 opacity-80">ENTERPRISES</div>
           </div>
-          
+
           <ul className="hidden lg:flex space-x-10">
             {['Home', 'About', 'Services', 'Projects', 'Process', 'Contact'].map((item) => (
               <li key={item}>
                 <button
                   onClick={() => scrollToSection(item.toLowerCase())}
-                  className={`font-semibold text-sm tracking-wider transition-all duration-300 hover:scale-105 relative group ${
-                    headerBg ? 'text-slate-700 hover:text-slate-900' : 'text-white hover:text-slate-200'
-                  }`}
+                  className={`font-semibold text-sm tracking-wider transition-all duration-300 hover:scale-105 relative group ${headerBg ? 'text-slate-700 hover:text-slate-900' : 'text-white hover:text-slate-200'
+                    }`}
                 >
                   {item.toUpperCase()}
                   <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-gradient-to-r from-slate-600 to-slate-800 group-hover:w-full transition-all duration-300"></span>
@@ -449,7 +458,7 @@ export default function RiseEnterprisesPage() {
           <div className="text-center mb-20 fade-in-element">
             <div className="text-sm font-bold text-slate-400 tracking-wider mb-4">OUR FOUNDATION</div>
             <h2 className="text-5xl font-bold mb-6">
-              Mission, Vision & 
+              Mission, Vision &
               <span className="bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent"> Values</span>
             </h2>
           </div>
@@ -460,7 +469,7 @@ export default function RiseEnterprisesPage() {
               </div>
               <h3 className="text-2xl font-bold mb-4">MISSION</h3>
               <p className="text-slate-300 leading-relaxed">
-                Innovating ways and means for better performance of men & machinery. We continuously explore innovative approaches to 
+                Innovating ways and means for better performance of men & machinery. We continuously explore innovative approaches to
                 improve the performance of both our skilled workforce and state-of-the-art machinery, ensuring exceptional results.
               </p>
             </div>
@@ -470,7 +479,7 @@ export default function RiseEnterprisesPage() {
               </div>
               <h3 className="text-2xl font-bold mb-4">VISION</h3>
               <p className="text-slate-300 leading-relaxed">
-                Becoming a Premier Contracting Firm, expanding beyond Pune, serving values. We aim to establish ourselves as the 
+                Becoming a Premier Contracting Firm, expanding beyond Pune, serving values. We aim to establish ourselves as the
                 leading construction company while maintaining our core values and principles.
               </p>
             </div>
@@ -480,7 +489,7 @@ export default function RiseEnterprisesPage() {
               </div>
               <h3 className="text-2xl font-bold mb-4">VALUES</h3>
               <p className="text-slate-300 leading-relaxed">
-                Our values are the bedrock of our organization, keeping us firmly grounded while inspiring us to reach new heights. 
+                Our values are the bedrock of our organization, keeping us firmly grounded while inspiring us to reach new heights.
                 At the heart of our values is commitment to integrity, quality, and unwavering dedication.
               </p>
             </div>
@@ -493,11 +502,11 @@ export default function RiseEnterprisesPage() {
           <div className="text-center mb-20 fade-in-element">
             <div className="text-sm font-bold text-slate-600 tracking-wider mb-4">LEADERSHIP</div>
             <h2 className="text-5xl font-bold mb-6 text-slate-900">
-              Head of 
+              Head of
               <span className="bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent"> Organisation</span>
             </h2>
           </div>
-          
+
           <div className="max-w-5xl mx-auto">
             <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-3xl p-12 fade-in-element border border-slate-200">
               <div className="grid md:grid-cols-3 gap-12 items-center">
@@ -519,11 +528,11 @@ export default function RiseEnterprisesPage() {
                   <h3 className="text-3xl font-bold text-slate-900 mb-3">Mr. Satish Shrihari Munde</h3>
                   <div className="text-slate-600 font-semibold mb-6 text-lg">Head of Organisation</div>
                   <p className="text-slate-600 leading-relaxed mb-6 text-lg">
-                    With an MBA degree from Pune University and a remarkable 10 years of experience in civil works, 
+                    With an MBA degree from Pune University and a remarkable 10 years of experience in civil works,
                     Mr. Munde has consistently delivered complete client satisfaction.
                   </p>
                   <p className="text-slate-600 leading-relaxed text-lg">
-                    As a seasoned professional, he now leads the charge in pursuing his dream of forming and 
+                    As a seasoned professional, he now leads the charge in pursuing his dream of forming and
                     running a top-tier contracting organization with unwavering commitment to excellence.
                   </p>
                 </div>
@@ -546,7 +555,7 @@ export default function RiseEnterprisesPage() {
           <div className="text-center mb-20 fade-in-element">
             <div className="text-sm font-bold text-slate-600 tracking-wider mb-4">OUR PROCESS</div>
             <h2 className="text-5xl font-bold mb-6 text-slate-900">
-              How We 
+              How We
               <span className="bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent"> Work</span>
             </h2>
           </div>
@@ -587,7 +596,7 @@ export default function RiseEnterprisesPage() {
           <div className="text-center mb-20 fade-in-element">
             <div className="text-sm font-bold text-slate-400 tracking-wider mb-4">FUTURE PLANS</div>
             <h2 className="text-5xl font-bold mb-6">
-              Expanding Our 
+              Expanding Our
               <span className="bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent"> Capabilities</span>
             </h2>
           </div>
@@ -595,8 +604,8 @@ export default function RiseEnterprisesPage() {
             <div className="bg-slate-800 rounded-3xl p-12 fade-in-element">
               <div className="text-6xl mb-8"><Rocket size={56} /></div>
               <p className="text-xl text-slate-300 leading-relaxed">
-                Our future plans include expanding our construction capabilities with larger cranes, advanced technology, 
-                and highly skilled workers to deliver top-quality projects on time. We are committed to growth while 
+                Our future plans include expanding our construction capabilities with larger cranes, advanced technology,
+                and highly skilled workers to deliver top-quality projects on time. We are committed to growth while
                 maintaining our standards of excellence.
               </p>
             </div>
@@ -609,7 +618,7 @@ export default function RiseEnterprisesPage() {
           <div className="text-center mb-20 fade-in-element">
             <div className="text-sm font-bold text-slate-600 tracking-wider mb-4">WHY CHOOSE US</div>
             <h2 className="text-5xl font-bold mb-6 text-slate-900">
-              Our 
+              Our
               <span className="bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent"> Advantages</span>
             </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
@@ -640,7 +649,7 @@ export default function RiseEnterprisesPage() {
           <div className="text-center mb-20 fade-in-element">
             <div className="text-sm font-bold text-slate-400 tracking-wider mb-4">OUR CLIENTS</div>
             <h2 className="text-5xl font-bold mb-6">
-              Trusted by 
+              Trusted by
               <span className="bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent"> Many</span>
             </h2>
           </div>
