@@ -4,7 +4,8 @@ import { useState, useEffect, useMemo, useCallback, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { usePerformance } from './hooks/usePerformance';
 import {
-  Building2, Building, Sparkles, Home, Landmark, TreePine, Wrench, ShieldCheck, Lock, Users, Phone, Ruler, Star, Smile, ClipboardList, Target, AlarmClock, DollarSign, Eye, Gem, Rocket, Zap
+  Building2, Building, Sparkles, Home, Landmark, TreePine, Wrench, ShieldCheck, Lock, Users, Phone, Ruler, Star, Smile,
+  DollarSign, Target, AlarmClock
 } from 'lucide-react';
 
 // Lazy load components for better performance
@@ -35,6 +36,36 @@ const ContactSection = dynamic(() => import('./components/sections/ContactSectio
 
 const Footer = dynamic(() => import('./components/sections/Footer'), {
   loading: () => <div className="py-16 bg-slate-900 animate-pulse" />,
+  ssr: false,
+});
+
+const MissionVisionSection = dynamic(() => import('./components/sections/MissionVisionSection'), {
+  loading: () => <div className="py-32 bg-slate-900 animate-pulse" />,
+  ssr: false,
+});
+
+const LeadershipSection = dynamic(() => import('./components/sections/LeadershipSection'), {
+  loading: () => <div className="py-32 bg-white animate-pulse" />,
+  ssr: false,
+});
+
+const ProcessSection = dynamic(() => import('./components/sections/ProcessSection'), {
+  loading: () => <div className="py-32 bg-slate-50 animate-pulse" />,
+  ssr: false,
+});
+
+const FuturePlansSection = dynamic(() => import('./components/sections/FuturePlansSection'), {
+  loading: () => <div className="py-32 bg-slate-900 animate-pulse" />,
+  ssr: false,
+});
+
+const AdvantagesSection = dynamic(() => import('./components/sections/AdvantagesSection'), {
+  loading: () => <div className="py-32 bg-slate-50 animate-pulse" />,
+  ssr: false,
+});
+
+const ClientsSection = dynamic(() => import('./components/sections/ClientsSection'), {
+  loading: () => <div className="py-32 bg-slate-900 animate-pulse" />,
   ssr: false,
 });
 
@@ -155,14 +186,14 @@ export default function RiseEnterprisesPage() {
       id: "4",
       name: 'Sports Complex "A"',
       category: "Recreation",
-      image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&q=80&auto=format&fit=crop",
+      image: "/complex-1.webp",
       description: "Modern sports facility with advanced equipment and design"
     },
     {
       id: "5",
       name: 'Sports Complex "B"',
       category: "Recreation",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop",
+      image: "/complex-2.webp",
       description: "Secondary sports complex with comprehensive facilities"
     },
     {
@@ -452,247 +483,37 @@ export default function RiseEnterprisesPage() {
         <AboutSection stats={stats} isVisible={isVisible} />
       </Suspense>
 
-      {/* Mission, Vision, Values Section */}
-      <section className="py-32 bg-slate-900 text-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20 fade-in-element">
-            <div className="text-sm font-bold text-slate-400 tracking-wider mb-4">OUR FOUNDATION</div>
-            <h2 className="text-5xl font-bold mb-6">
-              Mission, Vision &
-              <span className="bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent"> Values</span>
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-10">
-            <div className="bg-slate-800 rounded-3xl p-8 hover:bg-slate-700 transition-colors duration-500">
-              <div className="w-16 h-16 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center mb-6 text-2xl">
-                <Target size={40} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">MISSION</h3>
-              <p className="text-slate-300 leading-relaxed">
-                Innovating ways and means for better performance of men & machinery. We continuously explore innovative approaches to
-                improve the performance of both our skilled workforce and state-of-the-art machinery, ensuring exceptional results.
-              </p>
-            </div>
-            <div className="bg-slate-800 rounded-3xl p-8 hover:bg-slate-700 transition-colors duration-500">
-              <div className="w-16 h-16 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center mb-6 text-2xl">
-                <Eye size={40} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">VISION</h3>
-              <p className="text-slate-300 leading-relaxed">
-                Becoming a Premier Contracting Firm, expanding beyond Pune, serving values. We aim to establish ourselves as the
-                leading construction company while maintaining our core values and principles.
-              </p>
-            </div>
-            <div className="bg-slate-800 rounded-3xl p-8 hover:bg-slate-700 transition-colors duration-500">
-              <div className="w-16 h-16 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center mb-6 text-2xl">
-                <Gem size={40} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">VALUES</h3>
-              <p className="text-slate-300 leading-relaxed">
-                Our values are the bedrock of our organization, keeping us firmly grounded while inspiring us to reach new heights.
-                At the heart of our values is commitment to integrity, quality, and unwavering dedication.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* Leadership Section */}
-      <section className="py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20 fade-in-element">
-            <div className="text-sm font-bold text-slate-600 tracking-wider mb-4">LEADERSHIP</div>
-            <h2 className="text-5xl font-bold mb-6 text-slate-900">
-              Head of
-              <span className="bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent"> Organisation</span>
-            </h2>
-          </div>
+      <Suspense fallback={<div className="py-32 bg-slate-900 animate-pulse" />}>
+        <MissionVisionSection />
+      </Suspense>
 
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-3xl p-12 fade-in-element border border-slate-200">
-              <div className="grid md:grid-cols-3 gap-12 items-center">
-                <div className="text-center">
-                  <div className="w-48 h-48 mx-auto mb-6 rounded-full bg-gradient-to-r from-slate-600 to-slate-800 flex items-center justify-center text-white text-6xl font-bold shadow-2xl">
-                    SM
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 mt-8">
-                    {stats.slice(2).map((stat, index) => (
-                      <div key={index} className="text-center p-4 bg-white rounded-xl shadow-md">
-                        <div className="text-2xl mb-1">{stat.icon}</div>
-                        <div className="text-xl font-bold text-slate-800">{stat.number}</div>
-                        <div className="text-xs text-slate-600">{stat.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="md:col-span-2">
-                  <h3 className="text-3xl font-bold text-slate-900 mb-3">Mr. Satish Shrihari Munde</h3>
-                  <div className="text-slate-600 font-semibold mb-6 text-lg">Head of Organisation</div>
-                  <p className="text-slate-600 leading-relaxed mb-6 text-lg">
-                    With an MBA degree from Pune University and a remarkable 10 years of experience in civil works,
-                    Mr. Munde has consistently delivered complete client satisfaction.
-                  </p>
-                  <p className="text-slate-600 leading-relaxed text-lg">
-                    As a seasoned professional, he now leads the charge in pursuing his dream of forming and
-                    running a top-tier contracting organization with unwavering commitment to excellence.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* Enhanced Services Section */}
+      <Suspense fallback={<div className="py-32 bg-white animate-pulse" />}>
+        <LeadershipSection stats={stats} />
+      </Suspense>
+
       <Suspense fallback={<div className="py-32 bg-slate-50 animate-pulse" />}>
         <ServicesSection services={services} isVisible={isVisible} />
       </Suspense>
-      {/* Enhanced Projects Section */}
+
       <Suspense fallback={<div className="py-32 bg-white animate-pulse" />}>
         <ProjectsSection projects={projects} isVisible={isVisible} />
       </Suspense>
-      {/* Process Section */}
-      <section className="py-32 bg-gradient-to-br from-slate-50 to-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20 fade-in-element">
-            <div className="text-sm font-bold text-slate-600 tracking-wider mb-4">OUR PROCESS</div>
-            <h2 className="text-5xl font-bold mb-6 text-slate-900">
-              How We
-              <span className="bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent"> Work</span>
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-10">
-            <div className="text-center fade-in-element">
-              <div className="w-24 h-24 bg-gradient-to-r from-slate-600 to-slate-800 rounded-full flex items-center justify-center mb-6 text-3xl text-white mx-auto shadow-2xl">
-                <ClipboardList size={48} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-slate-900">PROJECT PLAN</h3>
-              <p className="text-slate-600 leading-relaxed">
-                Our construction process starts with a detailed project plan, ensuring every aspect is carefully considered and planned.
-              </p>
-            </div>
-            <div className="text-center fade-in-element">
-              <div className="w-24 h-24 bg-gradient-to-r from-slate-600 to-slate-800 rounded-full flex items-center justify-center mb-6 text-3xl text-white mx-auto shadow-2xl">
-                <Landmark size={48} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-slate-900">SITE PREPARATION</h3>
-              <p className="text-slate-600 leading-relaxed">
-                Process of getting a piece of land ready for construction with proper surveying and ground preparation.
-              </p>
-            </div>
-            <div className="text-center fade-in-element">
-              <div className="w-24 h-24 bg-gradient-to-r from-slate-600 to-slate-800 rounded-full flex items-center justify-center mb-6 text-3xl text-white mx-auto shadow-2xl">
-                <Zap size={48} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-slate-900">EXECUTION</h3>
-              <p className="text-slate-600 leading-relaxed">
-                Construction activities that take place on a project site with precision, quality control, and timely delivery.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* Future Plans Section */}
-      <section className="py-32 bg-slate-900 text-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20 fade-in-element">
-            <div className="text-sm font-bold text-slate-400 tracking-wider mb-4">FUTURE PLANS</div>
-            <h2 className="text-5xl font-bold mb-6">
-              Expanding Our
-              <span className="bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent"> Capabilities</span>
-            </h2>
-          </div>
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-slate-800 rounded-3xl p-12 fade-in-element">
-              <div className="text-6xl mb-8"><Rocket size={56} /></div>
-              <p className="text-xl text-slate-300 leading-relaxed">
-                Our future plans include expanding our construction capabilities with larger cranes, advanced technology,
-                and highly skilled workers to deliver top-quality projects on time. We are committed to growth while
-                maintaining our standards of excellence.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* Why Choose Us Section */}
-      <section className="py-32 bg-gradient-to-br from-slate-50 to-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20 fade-in-element">
-            <div className="text-sm font-bold text-slate-600 tracking-wider mb-4">WHY CHOOSE US</div>
-            <h2 className="text-5xl font-bold mb-6 text-slate-900">
-              Our
-              <span className="bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent"> Advantages</span>
-            </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Discover what makes RISE Enterprises the preferred choice for construction projects
-            </p>
-          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {advantages.map((advantage, index) => (
-              <div
-                key={index}
-                className={`fade-in-element bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 ${isVisible[`element-${index + 16}`] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <div className={`w-16 h-16 bg-gradient-to-r ${advantage.color} rounded-2xl flex items-center justify-center mb-6 text-2xl shadow-lg`}>
-                  {advantage.icon}
-                </div>
-                <h3 className="text-xl font-bold mb-4 text-slate-900">{advantage.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{advantage.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      {/* Client Section */}
-      <section className="py-32 bg-slate-900 text-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20 fade-in-element">
-            <div className="text-sm font-bold text-slate-400 tracking-wider mb-4">OUR CLIENTS</div>
-            <h2 className="text-5xl font-bold mb-6">
-              Trusted by
-              <span className="bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent"> Many</span>
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="fade-in-element">
-              <div className="bg-slate-800 rounded-3xl p-8">
-                <h3 className="text-3xl font-bold mb-6">Project Statistics</h3>
-                <div className="space-y-6">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300">Total Worked Area</span>
-                    <span className="text-2xl font-bold text-slate-100">391,000+ sq ft</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300">Primary Location</span>
-                    <span className="text-xl font-bold text-slate-100">Pune</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300">Specialization</span>
-                    <span className="text-xl font-bold text-slate-100">RCC & Development</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="fade-in-element">
-              <div className="bg-gradient-to-br from-slate-700 to-slate-800 rounded-3xl p-8">
-                <h3 className="text-2xl font-bold mb-6">Smart Construction Solutions</h3>
-                <p className="text-slate-300 text-lg leading-relaxed mb-6">
-                  At your service with innovative construction technologies and methodologies that ensure superior project outcomes.
-                </p>
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-slate-600 rounded-full flex items-center justify-center text-xl">
-                    <Landmark size={28} />
-                  </div>
-                  <div>
-                    <div className="font-bold">Main Buildings, Parking, Podium etc.</div>
-                    <div className="text-slate-400 text-sm">Comprehensive development projects</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Suspense fallback={<div className="py-32 bg-slate-50 animate-pulse" />}>
+        <ProcessSection />
+      </Suspense>
+
+      <Suspense fallback={<div className="py-32 bg-slate-900 animate-pulse" />}>
+        <FuturePlansSection />
+      </Suspense>
+
+      <Suspense fallback={<div className="py-32 bg-slate-50 animate-pulse" />}>
+        <AdvantagesSection advantages={advantages} isVisible={isVisible} />
+      </Suspense>
+
+      <Suspense fallback={<div className="py-32 bg-slate-900 animate-pulse" />}>
+        <ClientsSection />
+      </Suspense>
       {/* Contact Section */}
       <Suspense fallback={<div className="py-32 bg-slate-900 animate-pulse" />}>
         <ContactSection

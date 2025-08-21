@@ -8,45 +8,28 @@ import Link from 'next/link';
 // This would typically come from your data source
 const projectsData = [
     {
-        id: '1',
-        name: 'Akhada Complex',
-        category: 'Sports',
-        mainImage: '/akhada.webp',
-        images: ['/akhada.webp', '/akhada view 2.webp'],
-        description: 'A state-of-the-art wrestling and fitness complex designed to nurture athletic excellence.',
-        fullDescription: 'Our Akhada Complex represents the perfect blend of traditional wrestling culture and modern fitness facilities. The facility includes specialized training areas, modern equipment, and spaces designed for both professional athletes and fitness enthusiasts.',
+        id: '4',
+        name: 'Sports Complex "A"',
+        category: 'Recreation',
+        mainImage: '/complex-1.webp',
+        images: ['/complex-1.webp', '/complex-2.webp', '/pool view 1.webp', '/pool view 2.webp'],
+        description: 'A comprehensive sports facility featuring a state-of-the-art akhada and Olympic-standard swimming complex.',
+        fullDescription: 'Our Sports Complex A is a modern integrated sports facility that combines traditional wrestling culture with modern aquatics facilities. The complex includes an akhada section with specialized wrestling and fitness facilities, and a swimming section with Olympic-standard pools. This integrated facility caters to both combat sports and aquatics enthusiasts.',
         features: [
             'Professional wrestling arena',
             'Modern fitness equipment',
             'Specialized training zones',
-            'Locker rooms and shower facilities',
-            'Spectator seating area'
-        ],
-        specifications: {
-            area: '15,000 sq ft',
-            capacity: '200 people',
-            completionDate: '2024',
-            location: 'Pune, Maharashtra'
-        }
-    },
-    {
-        id: '2',
-        name: 'Swimming Complex',
-        category: 'Aquatics',
-        mainImage: '/pool view 1.webp',
-        images: ['/pool view 1.webp', '/pool view 2.webp'],
-        description: 'Olympic-standard swimming facility with multiple pools and training areas.',
-        fullDescription: 'Our swimming complex features state-of-the-art pools designed for both professional training and recreational swimming. The facility includes Olympic-size pools, training pools, and dedicated areas for swimming lessons.',
-        features: [
             'Olympic-size swimming pool',
             'Training pool',
             'Kids pool',
             'Advanced filtration system',
-            'Temperature-controlled water'
+            'Temperature-controlled water',
+            'Locker rooms and shower facilities',
+            'Spectator seating areas'
         ],
         specifications: {
-            area: '25,000 sq ft',
-            capacity: '300 people',
+            area: '40,000 sq ft',
+            capacity: '500 people',
             completionDate: '2024',
             location: 'Pune, Maharashtra'
         }
