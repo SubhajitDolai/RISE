@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useCallback, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { usePerformance } from './hooks/usePerformance';
+import ProcessSectionDirect from './components/sections/ProcessSection';
 import {
   Building2, Building, Sparkles, Home, Landmark, TreePine, Wrench, ShieldCheck, Lock, Users, Phone, Ruler, Star, Smile,
   DollarSign, Target, AlarmClock
@@ -49,11 +50,6 @@ const LeadershipSection = dynamic(() => import('./components/sections/Leadership
   ssr: false,
 });
 
-const ProcessSection = dynamic(() => import('./components/sections/ProcessSection'), {
-  loading: () => <div className="py-32 bg-slate-50 animate-pulse" />,
-  ssr: false,
-});
-
 const FuturePlansSection = dynamic(() => import('./components/sections/FuturePlansSection'), {
   loading: () => <div className="py-32 bg-slate-900 animate-pulse" />,
   ssr: false,
@@ -78,6 +74,7 @@ export default function RiseEnterprisesPage() {
   const [isVisible, setIsVisible] = useState<{ [key: string]: boolean }>({});
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [componentsLoaded, setComponentsLoaded] = useState(false);
 
   // Memoized data to prevent unnecessary re-renders
   const heroSlides = useMemo(() => [
@@ -283,6 +280,12 @@ export default function RiseEnterprisesPage() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Components loading effect
+  useEffect(() => {
+    const timer = setTimeout(() => setComponentsLoaded(true), 2500); // Increased wait time for dynamic components
+    return () => clearTimeout(timer);
+  }, []);
+
   // Optimized scroll effects with throttling
   useEffect(() => {
     let ticking = false;
@@ -316,13 +319,56 @@ export default function RiseEnterprisesPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Memoized scroll function
-  const scrollToSection = useCallback((sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  // Enhanced scroll function with better error handling
+  const scrollToSection = useCallback((sectionId: string) => {    
+    // If still loading or components not loaded, wait
+    if (isLoading || !componentsLoaded) {
+      setTimeout(() => scrollToSection(sectionId), 300);
+      return;
     }
-  }, []);
+    
+    const performScroll = () => {
+      const element = document.getElementById(sectionId);
+      
+      if (element) {
+        // Use scrollIntoView with better options
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest'
+        });
+        return true;
+      }
+      return false;
+    };
+    
+    // Try immediate scroll
+    if (performScroll()) {
+      return;
+    }
+    
+    // If element not found, wait and try multiple times
+    let attempts = 0;
+    const maxAttempts = 20;
+    
+    const retryScroll = () => {
+      attempts++;
+      
+      if (performScroll()) {
+        return; // Success!
+      }
+      
+      if (attempts < maxAttempts) {
+        // Use requestAnimationFrame for better timing
+        requestAnimationFrame(() => {
+          setTimeout(retryScroll, attempts * 100); // Progressive delay
+        });
+      }
+    };
+    
+    // Start retrying
+    requestAnimationFrame(retryScroll);
+  }, [isLoading, componentsLoaded]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -499,9 +545,8 @@ export default function RiseEnterprisesPage() {
         <ProjectsSection projects={projects} isVisible={isVisible} />
       </Suspense>
 
-      <Suspense fallback={<div className="py-32 bg-slate-50 animate-pulse" />}>
-        <ProcessSection />
-      </Suspense>
+      {/* Process Section - Back to actual component */}
+      <ProcessSectionDirect />
 
       <Suspense fallback={<div className="py-32 bg-slate-900 animate-pulse" />}>
         <FuturePlansSection />

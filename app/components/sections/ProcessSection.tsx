@@ -5,7 +5,7 @@ import { ClipboardList, Landmark, Zap } from 'lucide-react';
 
 const ProcessSection: React.FC = () => {
     return (
-        <section className="py-32 bg-gradient-to-br from-slate-50 to-white">
+        <section id="process" className="py-32 bg-gradient-to-br from-slate-50 to-white">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-20 fade-in-element">
                     <div className="text-sm font-bold text-slate-600 tracking-wider mb-4">OUR PROCESS</div>
