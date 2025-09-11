@@ -2,22 +2,53 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
 import { projectsData } from '../../lib/data/projects';
 
 export default function ProjectDetails() {
     const params = useParams();
+    const router = useRouter();
     const project = projectsData.find(p => p.id === params.id);
+
+    const handleBackToProjects = () => {
+        // First navigate to home page
+        router.push('/');
+        
+        // Wait for navigation to complete, then scroll to projects section
+        setTimeout(() => {
+            const element = document.getElementById('projects');
+            if (element) {
+                element.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start',
+                    inline: 'nearest'
+                });
+            } else {
+                // Fallback: try again after a longer delay
+                setTimeout(() => {
+                    const projectsElement = document.getElementById('projects');
+                    if (projectsElement) {
+                        projectsElement.scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }, 500);
+            }
+        }, 200);
+    };
 
     if (!project) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold text-slate-900 mb-4">Project Not Found</h1>
-                    <Link href="/#projects" className="text-slate-600 hover:text-slate-800">
+                    <button 
+                        onClick={handleBackToProjects}
+                        className="text-slate-600 hover:text-slate-800"
+                    >
                         Return to Projects
-                    </Link>
+                    </button>
                 </div>
             </div>
         );
@@ -26,12 +57,12 @@ export default function ProjectDetails() {
     return (
         <div className="min-h-screen bg-white py-16">
             <div className="max-w-7xl mx-auto px-6">
-                <Link
-                    href="/#projects"
-                    className="inline-block mb-8 text-slate-600 hover:text-slate-800"
+                <button
+                    onClick={handleBackToProjects}
+                    className="inline-block mb-8 text-slate-600 hover:text-slate-800 transition-colors"
                 >
                     ← Back to Projects
-                </Link>
+                </button>
 
                 <div className="grid lg:grid-cols-2 gap-12">
                     {/* Left column - Images */}

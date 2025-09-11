@@ -18,7 +18,7 @@ export const projectsData: ProjectData[] = [
         id: '1',
         name: 'Rise Podium',
         category: 'Infrastructure',
-        mainImage: '/Podium - 1.webp',
+        mainImage: '/Podium Main.webp',
         images: [
             '/Podium - 1.webp',
             '/Podium - 2.webp'

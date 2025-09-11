@@ -106,7 +106,7 @@ export default function RiseEnterprisesPage() {
       icon: <Landmark size={32} />,
       title: "Infrastructure Work",
       description: "Complex infrastructure projects contributing to community growth with passion for building a better future through quality construction.",
-      image: "/Building A - 1.webp",
+      image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80",
       details: "Specialized in large-scale infrastructure development projects"
     },
     {
@@ -127,7 +127,7 @@ export default function RiseEnterprisesPage() {
       icon: <Home size={32} />,
       title: "Luxury Bungalows",
       description: "Bringing luxury and sophistication to life with our bungalow projects, offering comfortable and elegant living spaces.",
-      image: "/Multipurpose Hall Inside - 1.webp",
+      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
       details: "Custom luxury residential construction solutions"
     },
     {
@@ -141,7 +141,7 @@ export default function RiseEnterprisesPage() {
       icon: <Landmark size={32} />,
       title: "Road Projects (PQC/Bitumen/WBM)",
       description: "Contributing to infrastructure development with road projects, ensuring safe and efficient transportation networks.",
-      image: "/Main Building & Parking - 1.webp",
+      image: "/Road main.webp",
       details: "Advanced road construction with modern materials and techniques"
     },
     {
@@ -155,7 +155,7 @@ export default function RiseEnterprisesPage() {
       icon: <Wrench size={32} />,
       title: "Development Projects",
       description: "We undertake diverse development projects including retaining walls, clubhouses, podiums, STP, and UGWT systems.",
-      image: "/Podium - 1.webp",
+      image: "/Complex-1 Main.webp",
       details: "Comprehensive development solutions for modern infrastructure"
     }
   ], []);
