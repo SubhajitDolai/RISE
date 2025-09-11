@@ -144,11 +144,16 @@ export const clearImageCache = (): Promise<void> => {
 
 // Simpler cache buster for individual images
 export const bustImageCache = (src: string): string => {
+  console.log('🔧 Busting cache for:', src);
+  
   if (typeof window === 'undefined') return src;
   
   const url = getOptimizedImageUrl(src);
   const separator = url.includes('?') ? '&' : '?';
-  return `${url}${separator}bust=${Date.now()}&retry=${Math.random().toString(36).substr(2, 9)}`;
+  const bustedUrl = `${url}${separator}bust=${Date.now()}`;
+  
+  console.log('🔧 Cache busted URL:', bustedUrl);
+  return bustedUrl;
 };
 
 // Preload critical images with global accessibility

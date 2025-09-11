@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useState, memo, useEffect } from 'react';
-import { getOptimizedImageUrl, FALLBACK_IMAGE, bustImageCache } from '../../lib/vercelImageUtils';
+import { getOptimizedImageUrl, FALLBACK_IMAGE, bustImageCache } from '@/app/lib/vercelImageUtils';
 
 interface OptimizedImageProps {
   src: string;
