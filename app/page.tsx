@@ -4,11 +4,16 @@ import { useState, useEffect, useMemo, useCallback, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import ProcessSectionDirect from './components/sections/ProcessSection';
 import { projectsListData } from './lib/data/projects';
-import { preloadCriticalImages } from './lib/imagePreloader';
+import { preloadCriticalImagesVercel, clearImageCache, forceReloadAllImages } from './lib/vercelImageUtils';
 import {
   Building2, Building, Sparkles, Home, Landmark, TreePine, Wrench, ShieldCheck, Lock, Users, Phone, Ruler, Star, Smile,
   DollarSign, Target, AlarmClock
 } from 'lucide-react';
+
+// Cache manager for development
+const CacheManager = dynamic(() => import('./components/ui/CacheManager'), {
+  ssr: false,
+});
 
 // Fast-loading components with minimal loading states
 const HeroSection = dynamic(() => import('./components/sections/HeroSection'), {
@@ -79,14 +84,22 @@ export default function RiseEnterprisesPage() {
     setIsHydrated(true);
     setIsLoading(false);
     
-    // Preload critical images for faster loading
-    preloadCriticalImages();
+    // Clear cache and preload critical images for global accessibility
+    clearImageCache();
+    preloadCriticalImagesVercel();
+    
+    // Force reload images if needed (debug mode)
+    if (process.env.NODE_ENV === 'development') {
+      setTimeout(() => {
+        forceReloadAllImages();
+      }, 2000);
+    }
   }, []);
 
   // Memoized data with optimized smaller images for fast loading
   const heroSlides = useMemo(() => [
     {
-      image: "/Complex-1 Construction.webp",
+      image: "/Complex-1 Construction 2.webp",
       title: "BUILDING THE FUTURE",
       subtitle: "Premier civil construction and development services in Pune since 2022",
       overlay: "from-slate-900/80 via-slate-800/60 to-transparent"
@@ -98,7 +111,7 @@ export default function RiseEnterprisesPage() {
       overlay: "from-gray-900/80 via-gray-800/60 to-transparent"
     },
     {
-      image: "/Complex-1 Construction 1.webp",
+      image: "/Road - 2.webp",
       title: "TRUSTED EXCELLENCE",
       subtitle: "Quality infrastructure projects with innovative solutions",
       overlay: "from-slate-800/80 via-slate-700/60 to-transparent"
@@ -528,6 +541,9 @@ export default function RiseEnterprisesPage() {
       <Suspense fallback={<div className="py-16 bg-slate-900 animate-pulse" />}>
         <Footer />
       </Suspense>
+      
+      {/* Development Cache Manager */}
+      <CacheManager showControls={process.env.NODE_ENV === 'development'} />
     </div>
   );
 }
