@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
+import OptimizedImage from '../ui/OptimizedImage';
 
 interface Service {
   icon: React.ReactNode;
@@ -40,13 +40,16 @@ function ServicesSection({ services, isVisible }: ServicesSectionProps) {
             >
               <div className="bg-slate-800 rounded-3xl overflow-hidden shadow-2xl hover:shadow-slate-500/20 transition-all duration-500 group-hover:-translate-y-2 h-full">
                 <div className="relative h-48 overflow-hidden">
-                  <Image
+                  <OptimizedImage
                     src={service.image}
                     alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     width={400}
                     height={192}
-                    style={{ objectFit: 'cover', width: '100%', height: '192px' }}
+                    priority={index < 4} // Priority for first 4 services (typically visible on load)
+                    quality={80}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    placeholder="blur"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                   <div className="absolute top-4 right-4 w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-2xl">

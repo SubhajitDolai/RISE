@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+import OptimizedImage from '../ui/OptimizedImage';
 import { useRouter } from 'next/navigation';
 
 interface Project {
@@ -49,13 +49,16 @@ function ProjectsSection({ projects, isVisible }: ProjectsSectionProps) {
                 onClick={() => handleProjectClick(project.id)}
               >
                 <div className="relative h-64 overflow-hidden">
-                  <Image
+                  <OptimizedImage
                     src={project.image}
                     alt={project.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     width={400}
                     height={256}
-                    style={{ objectFit: 'cover', width: '100%', height: '256px' }}
+                    priority={index < 3} // Priority for first 3 projects (above the fold)
+                    quality={85}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    placeholder="blur"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
                   <div className="absolute top-6 left-6 bg-slate-700 text-white px-4 py-2 rounded-full text-sm font-semibold">

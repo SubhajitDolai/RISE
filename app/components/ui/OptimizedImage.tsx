@@ -51,9 +51,9 @@ const OptimizedImage = memo(({
   }
 
   return (
-    <div className={`relative ${className}`}>
-      {isLoading && (
-        <div className={`absolute inset-0 bg-slate-200 animate-pulse ${fill ? '' : 'aspect-video'}`} />
+    <div className={`relative ${fill ? 'w-full h-full' : ''}`}>
+      {isLoading && !priority && (
+        <div className={`absolute inset-0 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 animate-pulse ${fill ? '' : 'aspect-video'}`} />
       )}
       <Image
         src={src}
@@ -64,7 +64,7 @@ const OptimizedImage = memo(({
         priority={priority}
         quality={quality}
         sizes={sizes}
-        className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'} ${fill ? 'object-cover' : ''}`}
+        className={`transition-opacity duration-500 ${isLoading && !priority ? 'opacity-0' : 'opacity-100'} ${className}`}
         placeholder={placeholder}
         blurDataURL={placeholder === 'blur' ? blurDataURL : undefined}
         onLoad={handleLoadComplete}

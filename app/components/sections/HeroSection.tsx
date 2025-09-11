@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import OptimizedImage from '../ui/OptimizedImage';
 
 interface HeroSectionProps {
   heroSlides: Array<{ image: string; title: string; subtitle: string; overlay: string }>;
@@ -17,12 +18,17 @@ const HeroSection: React.FC<HeroSectionProps> = memo(({ heroSlides, currentSlide
             index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
           }`}
         >
-          <div
-            className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-15000 ease-linear"
-            style={{ 
-              backgroundImage: `url(${slide.image})`,
-              transform: index === currentSlide ? 'scale(1.01)' : 'scale(1)'
-            }}
+          <OptimizedImage
+            src={slide.image}
+            alt={`Hero slide ${index + 1}`}
+            fill
+            priority={index === 0} // Priority loading for first slide only
+            quality={90}
+            sizes="100vw"
+            className={`transition-transform duration-15000 ease-linear ${
+              index === currentSlide ? 'scale-101' : 'scale-100'
+            }`}
+            placeholder="blur"
           />
           <div className={`absolute inset-0 bg-gradient-to-br ${slide.overlay}`}></div>
         </div>

@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import Image from 'next/image';
+import OptimizedImage from '../ui/OptimizedImage';
 
 interface Stat {
   number: string;
@@ -51,14 +51,15 @@ const AboutSection = memo(function AboutSection({ stats, isVisible }: AboutSecti
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-slate-600 to-slate-800 rounded-3xl opacity-20 blur-xl"></div>
               <div className="relative rounded-3xl shadow-2xl w-full h-[500px] bg-white flex items-center justify-center p-12">
-                <Image
+                <OptimizedImage
                   src="/rise-logo.webp"
                   alt="RISE Enterprises Logo"
-                  className="max-w-full max-h-full object-contain"
                   width={600}
                   height={500}
-                  style={{ objectFit: 'contain' }}
-                  priority
+                  priority={true}
+                  quality={90}
+                  className="max-w-full max-h-full object-contain"
+                  placeholder="blur"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-2xl border border-slate-200">

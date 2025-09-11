@@ -61,6 +61,15 @@ img {
   background-color: #f1f5f9;
 }
 
+/* Optimize image scaling effects */
+.scale-101 {
+  transform: scale(1.01);
+}
+
+.scale-100 {
+  transform: scale(1);
+}
+
 /* Optimize text rendering */
 .text-optimize {
   text-rendering: optimizeLegibility;

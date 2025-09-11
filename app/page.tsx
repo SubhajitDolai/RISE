@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import ProcessSectionDirect from './components/sections/ProcessSection';
 import { projectsListData } from './lib/data/projects';
+import { preloadCriticalImages } from './lib/imagePreloader';
 import {
   Building2, Building, Sparkles, Home, Landmark, TreePine, Wrench, ShieldCheck, Lock, Users, Phone, Ruler, Star, Smile,
   DollarSign, Target, AlarmClock
@@ -77,6 +78,9 @@ export default function RiseEnterprisesPage() {
   useEffect(() => {
     setIsHydrated(true);
     setIsLoading(false);
+    
+    // Preload critical images for faster loading
+    preloadCriticalImages();
   }, []);
 
   // Memoized data with optimized smaller images for fast loading
