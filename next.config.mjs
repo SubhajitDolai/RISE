@@ -1,25 +1,52 @@
+import bundleAnalyzer from '@next/bundle-analyzer';
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
 
+  // Enhanced build performance
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
+      skipDefaultConversion: true,
+    },
+  },
+
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        port: '',
-        pathname: '/**',
-      },
-    ],
     formats: ['image/webp', 'image/avif'],
-    minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
+    minimumCacheTTL: 60 * 60 * 24 * 7, // 7 days for faster development
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512],
+    unoptimized: false,
+    loader: 'default',
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 
   experimental: {
-    optimizePackageImports: ['lucide-react']
+    optimizePackageImports: ['lucide-react'],
+  },
+
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn']
+    } : false,
   },
 
   compress: true,
+  
+  poweredByHeader: false,
+
+  // Build performance optimization
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000,
+    pagesBufferLength: 2,
+  },
 
   async headers() {
     return [
@@ -62,18 +89,17 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/(.*\\.(?:ico|png|jpg|jpeg|gif|webp|svg|woff|woff2)$)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
     ];
   },
-
-  webpack: process.env.ANALYZE === 'true' ? (config) => {
-    const analyzer = require('@next/bundle-analyzer');
-    config.plugins.push(
-      new (analyzer())({
-        enabled: true,
-      })
-    );
-    return config;
-  } : undefined,
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);

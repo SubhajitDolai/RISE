@@ -2,96 +2,99 @@
 
 import { useState, useEffect, useMemo, useCallback, Suspense } from 'react';
 import dynamic from 'next/dynamic';
-import { usePerformance } from './hooks/usePerformance';
 import ProcessSectionDirect from './components/sections/ProcessSection';
+import { projectsListData } from './lib/data/projects';
 import {
   Building2, Building, Sparkles, Home, Landmark, TreePine, Wrench, ShieldCheck, Lock, Users, Phone, Ruler, Star, Smile,
   DollarSign, Target, AlarmClock
 } from 'lucide-react';
 
-// Lazy load components for better performance
+// Fast-loading components with minimal loading states
 const HeroSection = dynamic(() => import('./components/sections/HeroSection'), {
   loading: () => <div className="h-screen bg-slate-900 animate-pulse" />,
-  ssr: false,
+  ssr: true,
 });
 
 const AboutSection = dynamic(() => import('./components/sections/AboutSection'), {
-  loading: () => <div className="py-32 bg-white animate-pulse" />,
+  loading: () => <div className="py-8 bg-white" />,
   ssr: false,
 });
 
 const ServicesSection = dynamic(() => import('./components/sections/ServicesSection'), {
-  loading: () => <div className="py-32 bg-slate-50 animate-pulse" />,
+  loading: () => <div className="py-8 bg-slate-50" />,
   ssr: false,
 });
 
 const ProjectsSection = dynamic(() => import('./components/sections/ProjectsSection'), {
-  loading: () => <div className="py-32 bg-white animate-pulse" />,
+  loading: () => <div className="py-8 bg-white" />,
   ssr: false,
 });
 
 const ContactSection = dynamic(() => import('./components/sections/ContactSection'), {
-  loading: () => <div className="py-32 bg-slate-900 animate-pulse" />,
+  loading: () => <div className="py-8 bg-slate-900" />,
   ssr: false,
 });
 
 const Footer = dynamic(() => import('./components/sections/Footer'), {
-  loading: () => <div className="py-16 bg-slate-900 animate-pulse" />,
+  loading: () => <div className="py-4 bg-slate-900" />,
   ssr: false,
 });
 
 const MissionVisionSection = dynamic(() => import('./components/sections/MissionVisionSection'), {
-  loading: () => <div className="py-32 bg-slate-900 animate-pulse" />,
+  loading: () => <div className="py-8 bg-slate-900" />,
   ssr: false,
 });
 
 const LeadershipSection = dynamic(() => import('./components/sections/LeadershipSection'), {
-  loading: () => <div className="py-32 bg-white animate-pulse" />,
+  loading: () => <div className="py-8 bg-white" />,
   ssr: false,
 });
 
 const FuturePlansSection = dynamic(() => import('./components/sections/FuturePlansSection'), {
-  loading: () => <div className="py-32 bg-slate-900 animate-pulse" />,
+  loading: () => <div className="py-8 bg-slate-900" />,
   ssr: false,
 });
 
 const AdvantagesSection = dynamic(() => import('./components/sections/AdvantagesSection'), {
-  loading: () => <div className="py-32 bg-slate-50 animate-pulse" />,
+  loading: () => <div className="py-8 bg-slate-50" />,
   ssr: false,
 });
 
 const ClientsSection = dynamic(() => import('./components/sections/ClientsSection'), {
-  loading: () => <div className="py-32 bg-slate-900 animate-pulse" />,
+  loading: () => <div className="py-8 bg-slate-900" />,
   ssr: false,
 });
 
 export default function RiseEnterprisesPage() {
-  // Performance optimization hook
-  usePerformance();
-
   const [currentSlide, setCurrentSlide] = useState(0);
   const [headerBg, setHeaderBg] = useState(false);
   const [isVisible, setIsVisible] = useState<{ [key: string]: boolean }>({});
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [componentsLoaded, setComponentsLoaded] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
-  // Memoized data to prevent unnecessary re-renders
+  // Fast hydration and loading optimization
+  useEffect(() => {
+    setIsHydrated(true);
+    setIsLoading(false);
+  }, []);
+
+  // Memoized data with optimized smaller images for fast loading
   const heroSlides = useMemo(() => [
     {
-      image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&q=80&auto=format&fit=crop",
+      image: "/Complex-1 Construction.webp",
       title: "BUILDING THE FUTURE",
       subtitle: "Premier civil construction and development services in Pune since 2022",
       overlay: "from-slate-900/80 via-slate-800/60 to-transparent"
     },
     {
-      image: "https://images.unsplash.com/photo-1590479773265-7464e5d48118?w=1920&q=80&auto=format&fit=crop",
+      image: "/Complex-2 Construction.webp",
       title: "CONTRACTOR & DEVELOPERS",
       subtitle: "Excellence in RCC construction with 391,000+ sq ft completed",
       overlay: "from-gray-900/80 via-gray-800/60 to-transparent"
     },
     {
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80&auto=format&fit=crop",
+      image: "/Complex-1 Construction 1.webp",
       title: "TRUSTED EXCELLENCE",
       subtitle: "Quality infrastructure projects with innovative solutions",
       overlay: "from-slate-800/80 via-slate-700/60 to-transparent"
@@ -103,104 +106,62 @@ export default function RiseEnterprisesPage() {
       icon: <Landmark size={32} />,
       title: "Infrastructure Work",
       description: "Complex infrastructure projects contributing to community growth with passion for building a better future through quality construction.",
-      image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400&q=80&auto=format&fit=crop",
+      image: "/Building A - 1.webp",
       details: "Specialized in large-scale infrastructure development projects"
     },
     {
       icon: <Building2 size={32} />,
       title: "Civil Construction (RCC)",
       description: "Meticulous construction of reinforced concrete structures, ensuring durability and reliability in every project we undertake.",
-      image: "https://images.unsplash.com/photo-1590479773265-7464e5d48118?w=400&q=80&auto=format&fit=crop",
+      image: "/Building A - 2.webp",
       details: "Expert RCC construction with advanced engineering techniques"
     },
     {
       icon: <Sparkles size={32} />,
       title: "Development & Finishing",
       description: "Crafting spaces that reflect quality and sophistication, paying attention to every detail from conceptualization to completion.",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&q=80&auto=format&fit=crop",
+      image: "/Building Outside - 1.webp",
       details: "Premium finishing work with attention to finest details"
     },
     {
       icon: <Home size={32} />,
       title: "Luxury Bungalows",
       description: "Bringing luxury and sophistication to life with our bungalow projects, offering comfortable and elegant living spaces.",
-      image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&q=80&auto=format&fit=crop",
+      image: "/Multipurpose Hall Inside - 1.webp",
       details: "Custom luxury residential construction solutions"
     },
     {
       icon: <Building size={32} />,
       title: "Commercial Buildings",
       description: "Our commercial projects are testament to our commitment to quality and efficiency, creating spaces that enhance business operations.",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&q=80&auto=format&fit=crop",
+      image: "/Multipurpose Hall Inside - 2.webp",
       details: "Modern commercial spaces designed for business success"
     },
     {
       icon: <Landmark size={32} />,
       title: "Road Projects (PQC/Bitumen/WBM)",
       description: "Contributing to infrastructure development with road projects, ensuring safe and efficient transportation networks.",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80&auto=format&fit=crop",
+      image: "/Main Building & Parking - 1.webp",
       details: "Advanced road construction with modern materials and techniques"
     },
     {
       icon: <TreePine size={32} />,
       title: "Publication Park & Garden Projects",
       description: "Our expertise extends to creating beautiful, serene parks and gardens for the community to enjoy and connect with nature.",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80&auto=format&fit=crop",
+      image: "/Main Building & Parking - 2.webp",
       details: "Landscape architecture and environmental construction"
     },
     {
       icon: <Wrench size={32} />,
       title: "Development Projects",
       description: "We undertake diverse development projects including retaining walls, clubhouses, podiums, STP, and UGWT systems.",
-      image: "https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=400&q=80&auto=format&fit=crop",
+      image: "/Podium - 1.webp",
       details: "Comprehensive development solutions for modern infrastructure"
     }
   ], []);
 
-  const projects = useMemo(() => [
-    {
-      id: "1",
-      name: "Podium Construction",
-      category: "Infrastructure",
-      image: "https://images.unsplash.com/photo-1590479773265-7464e5d48118?w=400&q=80&auto=format&fit=crop",
-      description: "Advanced podium construction with modern architectural design"
-    },
-    {
-      id: "2",
-      name: '"A" Building',
-      category: "Commercial",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&q=80&auto=format&fit=crop",
-      description: "State-of-the-art commercial building with premium amenities"
-    },
-    {
-      id: "3",
-      name: "Multipurpose Hall",
-      category: "Community",
-      image: "https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=400&q=80&auto=format&fit=crop",
-      description: "Versatile community space designed for multiple functions"
-    },
-    {
-      id: "4",
-      name: 'Sports Complex "A"',
-      category: "Recreation",
-      image: "/complex-1.webp",
-      description: "Modern sports facility with advanced equipment and design"
-    },
-    {
-      id: "5",
-      name: 'Sports Complex "B"',
-      category: "Recreation",
-      image: "/complex-2.webp",
-      description: "Secondary sports complex with comprehensive facilities"
-    },
-    {
-      id: "6",
-      name: "Main Buildings & Parking",
-      category: "Development",
-      image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&q=80&auto=format&fit=crop",
-      description: "Integrated development with main structures and parking solutions"
-    }
-  ], []);
+  // Use centralized project data
+  const projects = useMemo(() => projectsListData, []);
 
   const advantages = useMemo(() => [
     {
@@ -274,17 +235,12 @@ export default function RiseEnterprisesPage() {
     return () => clearInterval(slideInterval);
   }, [heroSlides.length]);
 
-  // Faster loading effect
+  // Instant loading effect
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800); // Reduced from 1500ms
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Components loading effect
-  useEffect(() => {
-    const timer = setTimeout(() => setComponentsLoaded(true), 2500); // Increased wait time for dynamic components
-    return () => clearTimeout(timer);
-  }, []);
+    if (isHydrated) {
+      setIsLoading(false); // Instant loading
+    }
+  }, [isHydrated]);
 
   // Optimized scroll effects with throttling
   useEffect(() => {
@@ -319,14 +275,9 @@ export default function RiseEnterprisesPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Enhanced scroll function with better error handling
+  // Enhanced scroll function with optimized performance
   const scrollToSection = useCallback((sectionId: string) => {    
-    // If still loading or components not loaded, wait
-    if (isLoading || !componentsLoaded) {
-      setTimeout(() => scrollToSection(sectionId), 300);
-      return;
-    }
-    
+    // Fast scroll without waiting for components
     const performScroll = () => {
       const element = document.getElementById(sectionId);
       
@@ -368,7 +319,7 @@ export default function RiseEnterprisesPage() {
     
     // Start retrying
     requestAnimationFrame(retryScroll);
-  }, [isLoading, componentsLoaded]);
+  }, []);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -427,7 +378,8 @@ export default function RiseEnterprisesPage() {
     setMobileMenuOpen(prev => !prev);
   }, []);
 
-  if (isLoading) {
+  // Prevent hydration mismatch by showing loading on both server and client initially
+  if (!isHydrated || isLoading) {
     return (
       <div className="fixed inset-0 bg-slate-900 flex items-center justify-center z-50">
         <div className="text-center">

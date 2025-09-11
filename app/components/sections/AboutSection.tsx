@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Image from 'next/image';
 
 interface Stat {
@@ -12,7 +12,7 @@ interface AboutSectionProps {
   isVisible: { [key: string]: boolean };
 }
 
-function AboutSection({ stats, isVisible }: AboutSectionProps) {
+const AboutSection = memo(function AboutSection({ stats, isVisible }: AboutSectionProps) {
   return (
     <section id="about" className="py-32 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-5">
@@ -50,15 +50,17 @@ function AboutSection({ stats, isVisible }: AboutSectionProps) {
           <div className={`fade-in-element ${isVisible['element-1'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} transition-all duration-1000 delay-300`}>
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-slate-600 to-slate-800 rounded-3xl opacity-20 blur-xl"></div>
-              <Image
-                src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80"
-                alt="Construction Excellence"
-                className="relative rounded-3xl shadow-2xl w-full h-[500px] object-cover"
-                width={600}
-                height={500}
-                style={{ objectFit: 'cover', width: '100%', height: '500px' }}
-                priority
-              />
+              <div className="relative rounded-3xl shadow-2xl w-full h-[500px] bg-white flex items-center justify-center p-12">
+                <Image
+                  src="/rise-logo.webp"
+                  alt="RISE Enterprises Logo"
+                  className="max-w-full max-h-full object-contain"
+                  width={600}
+                  height={500}
+                  style={{ objectFit: 'contain' }}
+                  priority
+                />
+              </div>
               <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-2xl border border-slate-200">
                 <div className="text-2xl font-bold bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent">Since 2022</div>
                 <div className="text-sm text-slate-600">Building Excellence</div>
@@ -69,6 +71,6 @@ function AboutSection({ stats, isVisible }: AboutSectionProps) {
       </div>
     </section>
   );
-}
+});
 
 export default AboutSection;

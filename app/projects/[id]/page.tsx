@@ -4,38 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-
-// This would typically come from your data source
-const projectsData = [
-    {
-        id: '4',
-        name: 'Sports Complex "A"',
-        category: 'Recreation',
-        mainImage: '/complex-1.webp',
-        images: ['/complex-1.webp', '/complex-2.webp', '/pool view 1.webp', '/pool view 2.webp'],
-        description: 'A comprehensive sports facility featuring a state-of-the-art akhada and Olympic-standard swimming complex.',
-        fullDescription: 'Our Sports Complex A is a modern integrated sports facility that combines traditional wrestling culture with modern aquatics facilities. The complex includes an akhada section with specialized wrestling and fitness facilities, and a swimming section with Olympic-standard pools. This integrated facility caters to both combat sports and aquatics enthusiasts.',
-        features: [
-            'Professional wrestling arena',
-            'Modern fitness equipment',
-            'Specialized training zones',
-            'Olympic-size swimming pool',
-            'Training pool',
-            'Kids pool',
-            'Advanced filtration system',
-            'Temperature-controlled water',
-            'Locker rooms and shower facilities',
-            'Spectator seating areas'
-        ],
-        specifications: {
-            area: '40,000 sq ft',
-            capacity: '500 people',
-            completionDate: '2024',
-            location: 'Pune, Maharashtra'
-        }
-    },
-    // Add more projects as needed
-];
+import { projectsData } from '../../lib/data/projects';
 
 export default function ProjectDetails() {
     const params = useParams();
