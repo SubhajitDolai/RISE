@@ -546,4 +546,4 @@ export default function RiseEnterprisesPage() {
       <CacheManager showControls={process.env.NODE_ENV === 'development'} />
     </div>
   );
-}
+} 
