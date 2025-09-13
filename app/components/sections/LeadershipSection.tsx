@@ -12,44 +12,42 @@ interface LeadershipSectionProps {
 
 const LeadershipSection: React.FC<LeadershipSectionProps> = ({ stats }) => {
     return (
-        <section className="py-32 bg-white">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="text-center mb-20 fade-in-element">
-                    <div className="text-sm font-bold text-slate-600 tracking-wider mb-4">LEADERSHIP</div>
-                    <h2 className="text-5xl font-bold mb-6 text-slate-900">
-                        Head of
-                        <span className="bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent"> Organisation</span>
-                    </h2>
+        <section id="leadership" className="py-28 bg-white border-t border-slate-200">
+            <div className="max-w-6xl mx-auto px-6">
+                <div className="mb-14 fade-in-element">
+                    <div className="text-xs font-semibold text-slate-500 tracking-widest mb-2 uppercase">Leadership</div>
+                    <h2 className="text-4xl md:text-5xl font-extrabold mb-2 text-slate-900 text-left">Head of Organisation</h2>
+                    <div className="h-1 w-16 bg-slate-700 rounded mb-4" />
+                    <p className="text-slate-500 text-lg max-w-2xl text-left">Meet the visionary leader driving our commitment to excellence and growth.</p>
                 </div>
-
-                <div className="max-w-5xl mx-auto">
-                    <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-3xl p-12 fade-in-element border border-slate-200">
-                        <div className="grid md:grid-cols-3 gap-12 items-center">
-                            <div className="text-center">
-                                <div className="w-48 h-48 mx-auto mb-6 rounded-full bg-gradient-to-r from-slate-600 to-slate-800 flex items-center justify-center text-white text-6xl font-bold shadow-2xl">
-                                    SM
-                                </div>
-                                <div className="grid grid-cols-2 gap-4 mt-8">
-                                    {stats.slice(2).map((stat, index) => (
-                                        <div key={index} className="text-center p-4 bg-white rounded-xl shadow-md">
-                                            <div className="text-2xl mb-1">{stat.icon}</div>
-                                            <div className="text-xl font-bold text-slate-800">{stat.number}</div>
-                                            <div className="text-xs text-slate-600">{stat.label}</div>
-                                        </div>
-                                    ))}
-                                </div>
+                <div className="max-w-6xl mx-auto">
+                    <div className="rounded-2xl p-10 fade-in-element border border-slate-200 bg-white/90 shadow-md flex flex-col md:flex-row gap-10 items-center md:items-start">
+                        {/* Profile */}
+                        <div className="flex flex-col items-center md:items-start min-w-[220px]">
+                            <div className="w-40 h-40 mb-6 rounded-full border-4 border-slate-200 bg-slate-100 flex items-center justify-center text-slate-700 text-5xl font-extrabold shadow-lg select-none">
+                                SM
                             </div>
-                            <div className="md:col-span-2">
-                                <h3 className="text-3xl font-bold text-slate-900 mb-3">Mr. Satish Shrihari Munde</h3>
-                                <div className="text-slate-600 font-semibold mb-6 text-lg">Head of Organisation</div>
-                                <p className="text-slate-600 leading-relaxed mb-6 text-lg">
-                                    With an MBA degree from Pune University and a remarkable 10 years of experience in civil works,
-                                    Mr. Munde has consistently delivered complete client satisfaction.
+                            <h3 className="text-2xl font-bold text-slate-900 mb-1 text-center md:text-left">Mr. Satish Shrihari Munde</h3>
+                            <div className="text-slate-500 font-semibold mb-4 text-base text-center md:text-left">Head of Organisation</div>
+                        </div>
+                        {/* Bio and Stats */}
+                        <div className="flex-1 flex flex-col gap-8">
+                            <div>
+                                <p className="text-slate-700 leading-relaxed mb-4 text-lg">
+                                    With an MBA from Pune University and over 10 years of experience in civil works, Mr. Munde has consistently delivered complete client satisfaction.
                                 </p>
-                                <p className="text-slate-600 leading-relaxed text-lg">
-                                    As a seasoned professional, he now leads the charge in pursuing his dream of forming and
-                                    running a top-tier contracting organization with unwavering commitment to excellence.
+                                <p className="text-slate-700 leading-relaxed text-lg">
+                                    As a seasoned professional, he now leads the charge in building a top-tier contracting organization with unwavering commitment to excellence.
                                 </p>
+                            </div>
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                {stats.map((stat, index) => (
+                                    <div key={index} className="flex flex-col items-center bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm">
+                                        <div className="text-2xl mb-1 text-slate-600">{stat.icon}</div>
+                                        <div className="text-2xl font-bold text-slate-900">{stat.number}</div>
+                                        <div className="text-xs text-slate-500 mt-1 text-center">{stat.label}</div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>

@@ -1,19 +1,15 @@
+
 'use client';
+import React from 'react';
 
 import { useState, useEffect, useMemo, useCallback, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import ProcessSectionDirect from './components/sections/ProcessSection';
 import { projectsListData } from './lib/data/projects';
-import { preloadCriticalImagesVercel, clearImageCache, forceReloadAllImages } from './lib/vercelImageUtils';
 import {
   Building2, Building, Sparkles, Home, Landmark, TreePine, Wrench, ShieldCheck, Lock, Users, Phone, Ruler, Star, Smile,
   DollarSign, Target, AlarmClock
 } from 'lucide-react';
-
-// Cache manager for development
-const CacheManager = dynamic(() => import('./components/ui/CacheManager'), {
-  ssr: false,
-});
 
 // Fast-loading components with minimal loading states
 const HeroSection = dynamic(() => import('./components/sections/HeroSection'), {
@@ -76,45 +72,28 @@ export default function RiseEnterprisesPage() {
   const [headerBg, setHeaderBg] = useState(false);
   const [isVisible, setIsVisible] = useState<{ [key: string]: boolean }>({});
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isHydrated, setIsHydrated] = useState(false);
-
-  // Fast hydration and loading optimization
-  useEffect(() => {
-    setIsHydrated(true);
-    setIsLoading(false);
-    
-    // Clear cache and preload critical images for global accessibility
-    clearImageCache();
-    preloadCriticalImagesVercel();
-    
-    // Force reload images if needed (debug mode)
-    if (process.env.NODE_ENV === 'development') {
-      setTimeout(() => {
-        forceReloadAllImages();
-      }, 2000);
-    }
-  }, []);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isHydrated] = useState(true);
 
   // Memoized data with optimized smaller images for fast loading
   const heroSlides = useMemo(() => [
     {
-      image: "/Complex-1 Construction 2.webp",
-      title: "BUILDING THE FUTURE",
-      subtitle: "Premier civil construction and development services in Pune since 2022",
+      image: "/Main Complex - 1.webp",
+      title: "ENGINEERING EXCELLENCE",
+      subtitle: "Precision construction for lasting impact and community growth.",
       overlay: "from-slate-900/80 via-slate-800/60 to-transparent"
     },
     {
-      image: "/Complex-2 Construction.webp",
-      title: "CONTRACTOR & DEVELOPERS",
-      subtitle: "Excellence in RCC construction with 391,000+ sq ft completed",
-      overlay: "from-gray-900/80 via-gray-800/60 to-transparent"
+      image: "/Main Complex - 2.webp",
+      title: "ARCHITECTURAL GRANDEUR",
+      subtitle: "Blending tradition and modernity in every project we deliver.",
+      overlay: "from-slate-900/80 via-slate-800/60 to-transparent"
     },
     {
-      image: "/Road - 2.webp",
-      title: "TRUSTED EXCELLENCE",
-      subtitle: "Quality infrastructure projects with innovative solutions",
-      overlay: "from-slate-800/80 via-slate-700/60 to-transparent"
+      image: "/Multipurpose Hall Inside - 1.webp",
+      title: "SPACES THAT INSPIRE",
+      subtitle: "Creating environments that foster innovation and connection.",
+      overlay: "from-slate-900/80 via-slate-800/60 to-transparent"
     }
   ], []);
 
@@ -422,13 +401,22 @@ export default function RiseEnterprisesPage() {
           }`}
       >
         <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className={`text-3xl font-bold transition-all duration-300 ${headerBg ? 'text-slate-900' : 'text-white'
-            }`}>
-            <span className="bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 bg-clip-text text-transparent">
-              RISE
+          <button
+            onClick={() => scrollToSection('home')}
+            className={`group flex flex-col items-start text-3xl font-bold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-400/60 rounded-lg px-2 py-1 -ml-2 ${headerBg ? 'text-slate-900' : 'text-white'}`}
+            aria-label="Go to top"
+          >
+            <span className="flex items-center gap-2">
+              <span className="bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 bg-clip-text text-transparent group-hover:from-slate-700 group-hover:to-slate-900 transition-colors duration-300">
+                RISE
+              </span>
             </span>
-            <div className="text-xs font-semibold tracking-widest mt-1 opacity-80">ENTERPRISES</div>
-          </div>
+            <div className="text-xs font-semibold tracking-widest mt-1 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+              ENTERPRISES
+            </div>
+            {/* Animated underline */}
+            <span className="block w-0 group-hover:w-full h-0.5 bg-gradient-to-r from-slate-500 via-slate-700 to-slate-900 rounded-full mt-1 transition-all duration-500"></span>
+          </button>
 
           <ul className="hidden lg:flex space-x-10">
             {['Home', 'About', 'Services', 'Projects', 'Process', 'Contact'].map((item) => (
@@ -447,9 +435,13 @@ export default function RiseEnterprisesPage() {
 
           <button
             onClick={() => scrollToSection('contact')}
-            className="hidden lg:block bg-gradient-to-r from-slate-700 to-slate-900 text-white px-8 py-3 rounded-full font-bold text-sm tracking-wider hover:shadow-2xl hover:shadow-slate-500/25 hover:-translate-y-1 transition-all duration-300"
+            className="hidden lg:flex items-center gap-2 bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 text-white px-8 py-3 rounded-full font-bold text-sm tracking-wider shadow-lg hover:shadow-2xl hover:shadow-slate-500/25 hover:-translate-y-1 hover:scale-105 transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-slate-400/60 focus:ring-offset-2 active:scale-95"
+            aria-label="Get a quote - Contact us"
           >
-            GET QUOTE
+            <span className="group-hover:animate-pulse">GET IN TOUCH</span>
+            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
           </button>
 
           {/* Mobile Menu Button */}
@@ -465,21 +457,43 @@ export default function RiseEnterprisesPage() {
 
         {/* Enhanced Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-white/98 backdrop-blur-xl border-t border-slate-200 shadow-xl">
-            <div className="max-w-7xl mx-auto px-6 py-6">
-              {['Home', 'About', 'Services', 'Projects', 'Process', 'Contact'].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => {
-                    scrollToSection(item.toLowerCase());
-                    setMobileMenuOpen(false);
-                  }}
-                  className="block w-full text-left py-3 text-slate-700 hover:text-slate-900 transition-colors font-medium"
-                >
-                  {item}
-                </button>
+          <div className="lg:hidden fixed inset-0 z-[9999] min-h-screen h-screen w-screen flex flex-col bg-white/95 backdrop-blur-2xl shadow-2xl animate-slide-down border-t border-slate-200">
+            <div className="flex justify-end px-6 pt-6">
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close menu"
+                className="p-2 rounded-full bg-white/70 hover:bg-slate-100 shadow transition"
+              >
+                <svg className="w-7 h-7 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="flex-1 flex flex-col justify-center items-center space-y-2 px-6 pb-12">
+              {['Home', 'About', 'Services', 'Projects', 'Process', 'Contact'].map((item, idx, arr) => (
+                <React.Fragment key={item}>
+                  <button
+                    onClick={() => {
+                      scrollToSection(item.toLowerCase());
+                      setMobileMenuOpen(false);
+                    }}
+                    className="w-full text-center py-4 text-lg font-semibold text-slate-800 hover:text-blue-700 transition-colors rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+                  >
+                    {item}
+                  </button>
+                  {idx < arr.length - 1 && <div className="w-2/3 mx-auto h-px bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 opacity-70" />}
+                </React.Fragment>
               ))}
             </div>
+            <style jsx global>{`
+              @keyframes slide-down {
+                from { transform: translateY(-40px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+              }
+              .animate-slide-down {
+                animation: slide-down 0.35s cubic-bezier(0.4,0,0.2,1);
+              }
+            `}</style>
           </div>
         )}
       </header>
@@ -541,9 +555,6 @@ export default function RiseEnterprisesPage() {
       <Suspense fallback={<div className="py-16 bg-slate-900 animate-pulse" />}>
         <Footer />
       </Suspense>
-      
-      {/* Development Cache Manager */}
-      <CacheManager showControls={process.env.NODE_ENV === 'development'} />
     </div>
   );
 } 

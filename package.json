@@ -4,21 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "NEXT_DISABLE_TURBOPACK=1 next dev",
-    "build": "npm run validate-global-images && next build",
-    "build:fast": "NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 next build",
-    "build:analyze": "ANALYZE=true npm run build:fast",
-    "build:vercel": "npm run validate-global-images && npm run build:fast",
-    "build:global": "npm run validate-global-images && npm run clean && npm run build:fast",
-    "start": "if [ -f .next/standalone/server.js ]; then node .next/standalone/server.js; else next start; fi",
-    "start:standalone": "node .next/standalone/server.js",
-    "lint": "next lint",
-    "type-check": "tsc --noEmit",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "clean": "rm -rf .next && rm -rf node_modules/.cache",
-    "validate-images": "node scripts/validate-images.js",
-    "validate-global-images": "node scripts/validate-global-images.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start", 
+    "lint": "next lint"
   },
   "dependencies": {
     "@types/nodemailer": "^6.4.17",
@@ -26,8 +15,7 @@
     "next": "^15.5.2",
     "nodemailer": "^7.0.5",
     "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "resend": "^4.8.0"
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
