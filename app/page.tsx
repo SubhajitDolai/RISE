@@ -172,7 +172,7 @@ export default function RiseEnterprisesPage() {
       icon: <Wrench size={32} />,
       title: "Development Projects",
       description: "We undertake diverse development projects including retaining walls, clubhouses, podiums, STP, and UGWT systems.",
-      image: "/Complex-1 Main.webp",
+      image: "/Main Complex - 1 c.webp",
       details: "Comprehensive development solutions for modern infrastructure"
     }
   ], []);
