@@ -129,15 +129,16 @@ export async function POST(request: NextRequest) {
                     Submission Date:
                   </td>
                   <td style="padding: 15px 20px; color: #64748b; font-size: 15px;">
-                    ${new Date().toLocaleString('en-US', { 
+                    ${new Date().toLocaleString('en-IN', { 
+                      timeZone: 'Asia/Kolkata',
                       weekday: 'long', 
                       year: 'numeric', 
                       month: 'long', 
                       day: 'numeric',
                       hour: '2-digit',
                       minute: '2-digit',
-                      timeZoneName: 'short'
-                    })}
+                      hour12: true
+                    })} IST
                   </td>
                 </tr>
               </table>
