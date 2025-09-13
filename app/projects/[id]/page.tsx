@@ -213,7 +213,7 @@ export default function ProjectDetails() {
                             </div>
 
                             {/* Floating CTA Section */}
-                            <div className="fixed bottom-6 right-6 z-40">
+                            <div className="fixed bottom-6 right-6 z-40 hidden md:block">
                                 <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 text-slate-900 shadow-2xl max-w-sm">
                                     <h3 className="text-lg font-bold mb-3 text-slate-800">Interested in Similar Projects?</h3>
                                     <p className="text-slate-600 mb-4 leading-relaxed text-sm">
