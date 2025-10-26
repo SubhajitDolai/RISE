@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -16,9 +16,6 @@ interface ProjectsSectionProps {
   projects: Project[];
   isVisible: { [key: string]: boolean };
 }
-
-
-import { useState } from 'react';
 
 function ProjectsSection({ projects, isVisible }: ProjectsSectionProps) {
   const router = useRouter();
@@ -75,6 +72,7 @@ function ProjectsSection({ projects, isVisible }: ProjectsSectionProps) {
             </div>
           ))}
         </div>
+
         {/* Loader Overlay */}
         {loading && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">

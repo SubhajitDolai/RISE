@@ -32,6 +32,11 @@ const ProjectsSection = dynamic(() => import('./components/sections/ProjectsSect
   ssr: false,
 });
 
+const GallerySection = dynamic(() => import('./components/sections/GallerySection'), {
+  loading: () => <div className="py-32 bg-white animate-pulse" />,
+  ssr: false,
+});
+
 const ContactSection = dynamic(() => import('./components/sections/ContactSection'), {
   loading: () => <div className="py-8 bg-slate-900" />,
   ssr: false,
@@ -217,9 +222,9 @@ export default function RiseEnterprisesPage() {
   ], []);
 
   const stats = useMemo(() => [
-    { number: "391,000+", label: "Sq. Ft. Completed", icon: <Ruler size={28} /> },
-    { number: "50+", label: "Projects Delivered", icon: <Landmark size={28} /> },
-    { number: "10+", label: "Years Experience", icon: <Star size={28} /> },
+    { number: "7,91,000+", label: "Sq. Ft. Completed", icon: <Ruler size={28} /> },
+    { number: "75+", label: "Projects Delivered", icon: <Landmark size={28} /> },
+    { number: "16+", label: "Years Experience", icon: <Star size={28} /> },
     { number: "100%", label: "Client Satisfaction", icon: <Smile size={28} /> }
   ], []);
 
@@ -248,6 +253,7 @@ export default function RiseEnterprisesPage() {
           setHeaderBg(window.scrollY > 50);
 
           const elements = document.querySelectorAll('.fade-in-element');
+          const galleryElements = document.querySelectorAll('[id^="gallery"]');
           const windowHeight = window.innerHeight;
 
           elements.forEach((element, index) => {
@@ -257,6 +263,17 @@ export default function RiseEnterprisesPage() {
             setIsVisible(prev => ({
               ...prev,
               [`element-${index}`]: elementVisible
+            }));
+          });
+
+          // Track gallery elements visibility
+          galleryElements.forEach((element, index) => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = elementTop < windowHeight - 80;
+
+            setIsVisible(prev => ({
+              ...prev,
+              [`gallery-${index}`]: elementVisible
             }));
           });
 
@@ -396,38 +413,37 @@ export default function RiseEnterprisesPage() {
       {/* Navigation */}
       <header
         className={`fixed w-full top-0 z-50 transition-all duration-300 ${headerBg
-          ? 'bg-white/95 backdrop-blur-xl shadow-2xl border-b border-slate-200'
-          : 'bg-transparent'
+          ? 'bg-white/30 backdrop-blur-xl shadow-2xl' // glassmorphism
+          : 'bg-transparent' // fully transparent at top
           }`}
       >
-        <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+  <nav className={`max-w-7xl mx-auto px-6 py-4 flex justify-between items-center ${headerBg ? '' : 'text-white drop-shadow-lg'}`}>
           <button
             onClick={() => scrollToSection('home')}
-            className={`group flex flex-col items-start text-3xl font-bold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-400/60 rounded-lg px-2 py-1 -ml-2 ${headerBg ? 'text-slate-900' : 'text-white'}`}
+            className={`group flex flex-col items-start text-3xl font-bold transition-all duration-300 focus:outline-none focus:ring-2 ${headerBg ? 'focus:ring-slate-400/60 text-slate-900' : 'focus:ring-white/60 text-white' } rounded-lg px-2 py-1 -ml-2`}
             aria-label="Go to top"
           >
             <span className="flex items-center gap-2">
-              <span className="bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 bg-clip-text text-transparent group-hover:from-slate-700 group-hover:to-slate-900 transition-colors duration-300">
+              <span className={`bg-gradient-to-r ${headerBg ? 'from-slate-900 via-slate-700 to-slate-400' : 'from-white via-slate-200 to-slate-400'} bg-clip-text text-transparent group-hover:from-slate-100 group-hover:to-slate-400 transition-colors duration-300`}>
                 RISE
               </span>
             </span>
-            <div className="text-xs font-semibold tracking-widest mt-1 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+            <div className={`text-xs font-medium tracking-widest mt-1 opacity-80 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r ${headerBg ? 'from-slate-900 via-slate-700 to-slate-400' : 'from-white via-slate-200 to-slate-400'} bg-clip-text text-transparent`}>
               ENTERPRISES
             </div>
-            {/* Animated underline */}
-            <span className="block w-0 group-hover:w-full h-0.5 bg-gradient-to-r from-slate-500 via-slate-700 to-slate-900 rounded-full mt-1 transition-all duration-500"></span>
+            {/* White shades underline animation */}
+            <span className={`block w-0 group-hover:w-full h-0.5 bg-gradient-to-r ${headerBg ? 'from-slate-900 via-slate-700 to-slate-400' : 'from-white via-slate-200 to-slate-400'} rounded-full mt-1 transition-all duration-500`}></span>
           </button>
 
           <ul className="hidden lg:flex space-x-10">
-            {['Home', 'About', 'Services', 'Projects', 'Process', 'Contact'].map((item) => (
+            {['Home', 'About', 'Services', 'Projects', 'Gallery', 'Process', 'Contact'].map((item) => (
               <li key={item}>
                 <button
                   onClick={() => scrollToSection(item.toLowerCase())}
-                  className={`font-semibold text-sm tracking-wider transition-all duration-300 hover:scale-105 relative group ${headerBg ? 'text-slate-700 hover:text-slate-900' : 'text-white hover:text-slate-200'
-                    }`}
+                  className={`font-semibold text-sm tracking-wider transition-all duration-300 hover:scale-105 relative group ${headerBg ? 'text-slate-700 hover:text-slate-900' : 'text-white hover:text-slate-200'}`}
                 >
                   {item.toUpperCase()}
-                  <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-gradient-to-r from-slate-600 to-slate-800 group-hover:w-full transition-all duration-300"></span>
+                  <span className={`absolute -bottom-2 left-0 w-0 h-0.5 bg-gradient-to-r ${headerBg ? 'from-slate-700 to-slate-900' : 'from-white to-slate-400'} group-hover:w-full transition-all duration-300`}></span>
                 </button>
               </li>
             ))}
@@ -435,11 +451,11 @@ export default function RiseEnterprisesPage() {
 
           <button
             onClick={() => scrollToSection('contact')}
-            className="hidden lg:flex items-center gap-2 bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 text-white px-8 py-3 rounded-full font-bold text-sm tracking-wider shadow-lg hover:shadow-2xl hover:shadow-slate-500/25 hover:-translate-y-1 hover:scale-105 transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-slate-400/60 focus:ring-offset-2 active:scale-95"
+            className={`hidden lg:flex items-center gap-2 bg-gradient-to-r ${headerBg ? 'from-slate-700 via-slate-800 to-slate-900 text-white' : 'from-white via-slate-200 to-slate-400 text-slate-900'} px-8 py-3 rounded-full font-bold text-sm tracking-wider shadow-lg hover:shadow-2xl hover:shadow-slate-500/25 hover:-translate-y-1 hover:scale-105 transition-all duration-300 group focus:outline-none ${headerBg ? 'focus:ring-2 focus:ring-slate-400/60 focus:ring-offset-2' : 'focus:ring-2 focus:ring-white/60 focus:ring-offset-2'} active:scale-95`}
             aria-label="Get a quote - Contact us"
           >
             <span className="group-hover:animate-pulse">GET IN TOUCH</span>
-            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={`w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 ${headerBg ? 'text-white' : 'text-slate-900'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </button>
@@ -449,7 +465,7 @@ export default function RiseEnterprisesPage() {
             onClick={toggleMobileMenu}
             className={`lg:hidden transition-colors duration-300 ${headerBg ? 'text-slate-900' : 'text-white'}`}
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={`w-6 h-6 ${headerBg ? 'text-slate-900' : 'text-white'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
@@ -470,14 +486,14 @@ export default function RiseEnterprisesPage() {
               </button>
             </div>
             <div className="flex-1 flex flex-col justify-center items-center space-y-2 px-6 pb-12">
-              {['Home', 'About', 'Services', 'Projects', 'Process', 'Contact'].map((item, idx, arr) => (
+              {['Home', 'About', 'Services', 'Projects', 'Gallery', 'Process', 'Contact'].map((item, idx, arr) => (
                 <React.Fragment key={item}>
                   <button
                     onClick={() => {
                       scrollToSection(item.toLowerCase());
                       setMobileMenuOpen(false);
                     }}
-                    className="w-full text-center py-4 text-lg font-semibold text-slate-800 hover:text-blue-700 transition-colors rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+                    className="w-full text-center py-4 text-lg font-semibold text-slate-800 hover:text-orange-600 transition-colors rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400/40"
                   >
                     {item}
                   </button>
@@ -526,6 +542,10 @@ export default function RiseEnterprisesPage() {
 
       <Suspense fallback={<div className="py-32 bg-white animate-pulse" />}>
         <ProjectsSection projects={projects} isVisible={isVisible} />
+      </Suspense>
+
+      <Suspense fallback={<div className="py-32 bg-white animate-pulse" />}>
+        <GallerySection isVisible={isVisible} />
       </Suspense>
 
       {/* Process Section - Back to actual component */}

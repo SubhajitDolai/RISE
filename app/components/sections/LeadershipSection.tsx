@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 interface LeadershipSectionProps {
     stats: Array<{
@@ -12,7 +13,7 @@ interface LeadershipSectionProps {
 
 const LeadershipSection: React.FC<LeadershipSectionProps> = ({ stats }) => {
     return (
-        <section id="leadership" className="py-28 bg-white border-t border-slate-200">
+    <section id="leadership" className="py-16 sm:py-20 md:py-28 bg-white border-t border-slate-200">
             <div className="max-w-6xl mx-auto px-6">
                 <div className="mb-14 fade-in-element">
                     <div className="text-xs font-semibold text-slate-500 tracking-widest mb-2 uppercase">Leadership</div>
@@ -23,9 +24,16 @@ const LeadershipSection: React.FC<LeadershipSectionProps> = ({ stats }) => {
                 <div className="max-w-6xl mx-auto">
                     <div className="rounded-2xl p-10 fade-in-element border border-slate-200 bg-white/90 shadow-md flex flex-col md:flex-row gap-10 items-center md:items-start">
                         {/* Profile */}
-                        <div className="flex flex-col items-center md:items-start min-w-[220px]">
-                            <div className="w-40 h-40 mb-6 rounded-full border-4 border-slate-200 bg-slate-100 flex items-center justify-center text-slate-700 text-5xl font-extrabold shadow-lg select-none">
-                                SM
+                        <div className="flex flex-col items-center md:items-start min-w-[180px] sm:min-w-[220px]">
+                            <div className="w-40 h-40 mb-6 rounded-full border-4 border-slate-200 bg-slate-100 flex items-center justify-center shadow-lg select-none overflow-hidden">
+                                <Image
+                                    src="/owner.webp"
+                                    alt="Mr. Satish Shrihari Munde"
+                                    width={160}
+                                    height={160}
+                                    className="rounded-full object-cover w-full h-full"
+                                    priority
+                                />
                             </div>
                             <h3 className="text-2xl font-bold text-slate-900 mb-1 text-center md:text-left">Mr. Satish Shrihari Munde</h3>
                             <div className="text-slate-500 font-semibold mb-4 text-base text-center md:text-left">Head of Organisation</div>
@@ -40,12 +48,19 @@ const LeadershipSection: React.FC<LeadershipSectionProps> = ({ stats }) => {
                                     As a seasoned professional, he now leads the charge in building a top-tier contracting organization with unwavering commitment to excellence.
                                 </p>
                             </div>
-                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                                 {stats.map((stat, index) => (
-                                    <div key={index} className="flex flex-col items-center bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm">
-                                        <div className="text-2xl mb-1 text-slate-600">{stat.icon}</div>
-                                        <div className="text-2xl font-bold text-slate-900">{stat.number}</div>
-                                        <div className="text-xs text-slate-500 mt-1 text-center">{stat.label}</div>
+                                    <div
+                                        key={index}
+                                        className="flex flex-col items-center justify-center bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
+                                    >
+                                        <div className="text-3xl font-bold text-slate-800 mb-2 tracking-tight">
+                                            {stat.number}
+                                        </div>
+                                        <div className="h-0.5 w-8 bg-slate-200 rounded-full mb-3" />
+                                        <div className="text-xs font-medium text-slate-500 uppercase tracking-wide text-center">
+                                            {stat.label}
+                                        </div>
                                     </div>
                                 ))}
                             </div>
