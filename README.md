@@ -86,6 +86,32 @@ OWNER_EMAIL=your-email@gmail.com
 
 ---
 
+## Setting Up Google Account for SMTP
+
+To use Gmail for sending emails from the contact form, follow these steps:
+
+1. **Enable 2-Step Verification** on your Google account.
+2. **Create an App Password:**
+	- Go to your Google Account → Security → App Passwords.
+	- Select "Mail" as the app and "Other" for the device (e.g., "RISE App").
+	- Generate the password and copy it.
+3. **Configure SMTP in `.env.local`:**
+	- Use your Gmail address as `SMTP_USER`.
+	- Use the generated app password as `SMTP_PASS`.
+	- Example:
+	  ```env
+	  SMTP_HOST=smtp.gmail.com
+	  SMTP_PORT=465
+	  SMTP_USER=your-email@gmail.com
+	  SMTP_PASS=your-app-password
+	  ```
+
+**Important:**
+- Do not use your regular Gmail password. Always use an app password for SMTP.
+- Never commit `.env.local` to version control.
+
+---
+
 ## API
 
 ### Contact Form Endpoint
@@ -123,3 +149,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
